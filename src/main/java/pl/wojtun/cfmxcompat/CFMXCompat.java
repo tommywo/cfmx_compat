@@ -105,7 +105,7 @@ public final class CFMXCompat {
   }
 
 
-  public String decrypt(String encrypted, String key) {
+  public String decrypt(String encrypted, String key) throws CoderException {
     return decrypt(encrypted, key, DEFAULT_ENCODING);
   }
 
@@ -113,7 +113,7 @@ public final class CFMXCompat {
   public String encrypt(String plain, String key, String encoding) {
     switch (encoding.toLowerCase()){
       case UU:
-          return UUCoder.encode(transformString(key, plain.getBytes())).trim();
+        return UUCoder.encode(transformString(key, plain.getBytes())).trim();
       case HEX:
         return HexCoder.encode(transformString(key, plain.getBytes())).trim();
       case BASE64:
@@ -124,8 +124,7 @@ public final class CFMXCompat {
   }
 
 
-  public String decrypt(String encrypted, String key, String encoding) {
-    try {
+  public String decrypt(String encrypted, String key, String encoding) throws CoderException {
       switch (encoding.toLowerCase()) {
         case UU:
           return new String(transformString(key, UUCoder.decode(encrypted)));
@@ -136,9 +135,5 @@ public final class CFMXCompat {
         default:
           return null;
       }
-    } catch (CoderException e){
-      e.printStackTrace();
-      return null;
-    }
   }
 }

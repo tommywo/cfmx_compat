@@ -1,6 +1,5 @@
 package pl.wojtun.cfmxcompat.coder;
 
-import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -9,26 +8,6 @@ import org.apache.commons.codec.binary.Base64;
  */
 public final class Base64Coder {
 
-  /**
-   * decodes a Base64 String to a Plain String
-   * @param encoded
-   * @return
-   */
-  public static String decodeToString(String encoded,String charset) throws CoderException, UnsupportedEncodingException {
-    byte[] dec = decode(encoded);
-    return new String(dec,charset);
-  }
-
-  /**
-   * encodes a String to Base64 String
-   * @param plain String to encode
-   * @return encoded String
-   * @throws CoderException
-   * @throws UnsupportedEncodingException
-   */
-  public static String encodeFromString(String plain,String charset) throws CoderException, UnsupportedEncodingException {
-    return encode(plain.getBytes(charset));
-  }
 
   /**
    * encodes a byte array to Base64 String
