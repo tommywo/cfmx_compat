@@ -1,8 +1,9 @@
 package pl.wojtun.cfmxcompat;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import pl.wojtun.cfmxcompat.coder.CoderException;
 
@@ -69,16 +70,16 @@ public class CFMXCompactTest{
 
 
 
-    @Test(expected = CoderException.class)
+    @Test(expectedExceptions = CoderException.class)
     public void shouldThowExeption() throws CoderException {
         cfmxCompat.decrypt("adsasdad","key","hex");
     }
 
-    @Test(expected = CoderException.class)
+    @Test(expectedExceptions = CoderException.class)
     public void shouldThowExeptionWhenNullString() throws CoderException {
         cfmxCompat.decrypt(null,"ket","hex");
     }
-    @Test(expected = CoderException.class)
+    @Test(expectedExceptions = CoderException.class)
     public void shouldThowExeptionWhenNotProperHex() throws CoderException {
         cfmxCompat.decrypt("123","ket","hex");
     }
