@@ -50,7 +50,7 @@ public final class UUCoder {
 
   /**
    * decodes back a String to a byte array
-   * @param b
+   * @param str
    * @return decoded byte array
    */
   public static byte[] decode(String str) throws CoderException {

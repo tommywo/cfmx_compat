@@ -13,7 +13,6 @@ public final class Base64Coder {
    * encodes a byte array to Base64 String
    * @param barr byte array to encode
    * @return encoded String
-   * @throws CoderException
    */
   public static String encode(byte[] barr)  {
     barr=Base64.encodeBase64(barr);
