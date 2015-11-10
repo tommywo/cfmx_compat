@@ -7,7 +7,7 @@ Java library for encoding and decoding using CFMXCompat.
 
 Algorithm is taken from [railo](https://github.com/getrailo/railo) source.
 
-```
+```xml
 <dependency>
     <groupId>pl.wojtun</groupId>
     <artifactId>cfmxcompat</artifactId>
