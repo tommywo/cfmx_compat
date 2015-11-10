@@ -9,8 +9,6 @@ import pl.wojtun.cfmxcompat.coder.CoderException;
 
 public class CFMXCompactTest{
 
-    CFMXCompat cfmxCompat = new CFMXCompat();
-
     String key = "secretkey";
     String plain = "plain text value 1";
 
@@ -21,50 +19,50 @@ public class CFMXCompactTest{
 
     @Test
     public void shouldEncryptUU(){
-        Assert.assertEquals(cfmxCompat.encrypt(plain, key, "uu"), encryptedUu);
-        Assert.assertEquals(cfmxCompat.encrypt(plain,key),encryptedUu);
+        Assert.assertEquals(CFMXCompat.encrypt(plain, key, "uu"), encryptedUu);
+        Assert.assertEquals(CFMXCompat.encrypt(plain,key),encryptedUu);
 
     }
 
     @Test
     public void shouldDecryptUU() throws CoderException {
-        Assert.assertEquals(cfmxCompat.decrypt(encryptedUu, key,"uu"),plain);
-        Assert.assertEquals(cfmxCompat.decrypt(encryptedUu, key),plain);
+        Assert.assertEquals(CFMXCompat.decrypt(encryptedUu, key,"uu"),plain);
+        Assert.assertEquals(CFMXCompat.decrypt(encryptedUu, key),plain);
 
     }
 
     @Test
     public void shouldEncryptWithoutKey(){
-        Assert.assertEquals(cfmxCompat.encrypt("test","","uu"),encryptedUuDefault);
+        Assert.assertEquals(CFMXCompat.encrypt("test","","uu"),encryptedUuDefault);
     }
 
     @Test
     public void shoudEncryptHex(){
-        Assert.assertEquals(cfmxCompat.encrypt(plain,key,"hex"),encryptedHex);
+        Assert.assertEquals(CFMXCompat.encrypt(plain,key,"hex"),encryptedHex);
     }
 
 
     @Test
     public void shouldDecryptHex() throws CoderException {
-        Assert.assertEquals(cfmxCompat.decrypt(encryptedHex, key,"hex"),plain);
+        Assert.assertEquals(CFMXCompat.decrypt(encryptedHex, key,"hex"),plain);
 
     }
 
     @Test
     public void shouldEncryptBase64(){
-        Assert.assertEquals(cfmxCompat.encrypt(plain,key,"base64"),encryptedBase64);
+        Assert.assertEquals(CFMXCompat.encrypt(plain,key,"base64"),encryptedBase64);
     }
 
     @Test
     public void shouldDecryptBase64() throws CoderException {
-        Assert.assertEquals(cfmxCompat.decrypt(encryptedBase64, key,"base64"),plain);
+        Assert.assertEquals(CFMXCompat.decrypt(encryptedBase64, key,"base64"),plain);
 
     }
 
     @Test
     public void shouldReturnNull() throws CoderException {
-        Assert.assertNull(cfmxCompat.decrypt("adfasarq23r","asdf","UNKNOWN"));
-        Assert.assertNull(cfmxCompat.encrypt("eafasdf","sdfa","safdsa"));
+        Assert.assertNull(CFMXCompat.decrypt("adfasarq23r","asdf","UNKNOWN"));
+        Assert.assertNull(CFMXCompat.encrypt("eafasdf","sdfa","safdsa"));
     }
 
 
@@ -72,15 +70,15 @@ public class CFMXCompactTest{
 
     @Test(expectedExceptions = CoderException.class)
     public void shouldThowExeption() throws CoderException {
-        cfmxCompat.decrypt("adsasdad","key","hex");
+        CFMXCompat.decrypt("adsasdad","key","hex");
     }
 
     @Test(expectedExceptions = CoderException.class)
     public void shouldThowExeptionWhenNullString() throws CoderException {
-        cfmxCompat.decrypt(null,"ket","hex");
+        CFMXCompat.decrypt(null,"ket","hex");
     }
     @Test(expectedExceptions = CoderException.class)
     public void shouldThowExeptionWhenNotProperHex() throws CoderException {
-        cfmxCompat.decrypt("123","ket","hex");
+        CFMXCompat.decrypt("123","ket","hex");
     }
 }
