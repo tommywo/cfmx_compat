@@ -1,5 +1,35 @@
 # CFMXCompat
 
-[![Travis branch](https://img.shields.io/travis/tommywo/CFMXCompat/master.svg)]() [![Codecov branch](https://img.shields.io/codecov/c/github/tommywo/CFMXCompat/master.svg)]()
+[![Travis branch](https://img.shields.io/travis/tommywo/CFMXCompat/master.svg)](https://travis-ci.org/tommywo/CFMXCompat) [![Codecov branch](https://img.shields.io/codecov/c/github/tommywo/CFMXCompat/master.svg)](https://codecov.io/github/tommywo/CFMXCompat) [![Maven Central](https://img.shields.io/maven-central/v/pl.wojtun/cfmxcompat.svg)]()
 
-Standalone library for CFMXCompat
+
+Java implementation of CFMXCompat 
+
+Algorithm is taken from [railo](https://github.com/getrailo/railo) source.
+
+```
+<dependency>
+    <groupId>pl.wojtun</groupId>
+    <artifactId>cfmxcompat</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+
+Usage:
+```java
+String key = "secretkey"
+String plain = "plain text value"
+
+encrypted = CFMXCompat.encrypt(plain, key)
+decrypted = CFMXCompat.decrypt(encrypted, key)
+
+encrypted = CFMXCompat.encrypt(plain, key, "uu")
+decrypted = CFMXCompat.decrypt(encrypted, key, "uu")
+
+encrypted = CFMXCompat.encrypt(plain, key, "hex")
+decrypted = CFMXCompat.decrypt(encrypted, key, "hex")
+
+encrypted = CFMXCompat.encrypt(plain, key, "base64")
+decrypted = CFMXCompat.decrypt(encrypted, key, "base64")
+```
