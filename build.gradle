@@ -1,0 +1,109 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: "jacoco"
+
+
+group = 'pl.wojtun'
+archivesBaseName = "cfmxcompat"
+version = '0.0.1'
+
+description = """CFMXCompat"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+repositories {
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'commons-codec', name: 'commons-codec', version:'1.10'
+    testCompile group: 'org.testng', name: 'testng', version:'6.9.9'
+}
+
+test {
+  useTestNG()
+  afterTest { desc, result -> 
+    println "Executing test ${desc.name} with result: ${result.resultType}"
+  }
+}
+
+jacoco {
+    toolVersion = "0.7.5.201505241946"
+}
+jacocoTestReport {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+    reports {
+        xml.enabled true
+        html.enabled = true
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+      }
+
+      pom.project {
+        name 'CFMXCompat'
+        packaging 'jar'
+        // optionally artifactId can be defined here 
+        description 'Java library for encoding and decoding using CFMXCompat algorithm'
+        url 'https://github.com/tommywo/CFMXCompat'
+
+        scm {
+          connection 'scm:git:git@github.com:tommywo/CFMXCompat.git'
+          developerConnection 'scm:git:git@github.com:tommywo/CFMXCompat.git'
+          url 'https://github.com/tommywo/CFMXCompat'
+        }
+
+        licenses {
+          license {
+            name 'The GNU Lesser General Public License, Version 3.0'
+            url 'http://www.gnu.org/licenses/lgpl-3.0.txt'
+          }
+        }
+
+        developers {
+          developer {
+            id 'tommywo'
+            name 'Tomasz Wojtuń'
+            email 'tommywo@o2.pl'
+          }
+        }
+      }
+    }
+  }
+}
+
