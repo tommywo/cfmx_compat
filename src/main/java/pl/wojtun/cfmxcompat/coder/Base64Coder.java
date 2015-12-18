@@ -15,10 +15,10 @@ public final class Base64Coder {
    * @return encoded String
    */
   public static String encode(byte[] barr)  {
-    barr=Base64.encodeBase64(barr);
+    byte[] outbarr=Base64.encodeBase64(barr);
     StringBuilder sb=new StringBuilder();
-    for(int i=0;i<barr.length;i++) {
-      sb.append((char)barr[i]);
+    for(int i=0;i<outbarr.length;i++) {
+      sb.append((char)outbarr[i]);
     }
     return sb.toString();
   }
@@ -39,7 +39,7 @@ public final class Base64Coder {
       }
       return Base64.decodeBase64(bytes);
     }
-    catch(Throwable t) {
+    catch(Exception e) {
       throw new CoderException("can't decode input ["+encoded+"]");
     }
   }
