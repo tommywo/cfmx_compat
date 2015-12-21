@@ -14,8 +14,9 @@ public final class CFMXCompat {
   private static final String HEX = "hex";
   private static final String BASE64 = "base64";
 
+  private CFMXCompat(){
 
-
+  }
 
   public static String encrypt(String plain, String key) {
     return encrypt(plain,key,DEFAULT_ENCODING);
@@ -55,6 +56,5 @@ public final class CFMXCompat {
           return null;
       }
   }
-
 
 }

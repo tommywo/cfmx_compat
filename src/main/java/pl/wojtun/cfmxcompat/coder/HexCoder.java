@@ -7,6 +7,12 @@ import java.nio.charset.StandardCharsets;
  */
 public final class HexCoder {
 
+  private static final String empty = "can't decode empty String";
+  private static final String invalid = "invalid hexadicimal String";
+
+  private HexCoder() {
+  }
+
   /**
    * encodes a byte array to a String
    *
@@ -35,10 +41,10 @@ public final class HexCoder {
    */
   public static byte[] decode(String hexa) throws CoderException {
     if (hexa == null) {
-      throw new CoderException("can't decode empty String");
+      throw new CoderException(empty);
     }
     if ((hexa.length() % 2) != 0) {
-      throw new CoderException("invalid hexadicimal String");
+      throw new CoderException(invalid);
     }
     int tamArray = hexa.length() / 2;
     byte[] retorno = new byte[tamArray];
@@ -50,28 +56,28 @@ public final class HexCoder {
 
   private static byte hexToByte(String hexa) throws CoderException {
     if (hexa == null) {
-      throw new CoderException("can't decode empty String");
+      throw new CoderException(empty);
     }
     if (hexa.length() != 2) {
-      throw new CoderException("invalid hexadicimal String");
+      throw new CoderException(invalid);
     }
     byte[] b = hexa.getBytes(StandardCharsets.UTF_8);
-    byte valor = (byte) (hexDigitValue((char) b[0]) * 16 +
+    return (byte) (hexDigitValue((char) b[0]) * 16 +
                          hexDigitValue((char) b[1]));
-    return valor;
   }
 
   private static int hexDigitValue(char c) throws CoderException {
-    int retorno = 0;
+    int retorno;
     if (c >= '0' && c <= '9') {
-      retorno = (((byte) c) - 48);
+      retorno = ((byte) c) - 48;
     } else if (c >= 'A' && c <= 'F') {
-      retorno = (((byte) c) - 55);
+      retorno = ((byte) c) - 55;
     } else if (c >= 'a' && c <= 'f') {
-      retorno = (((byte) c) - 87);
+      retorno = ((byte) c) - 87;
     } else {
-      throw new CoderException("invalid hexadicimal String");
+      throw new CoderException(invalid);
     }
     return retorno;
   }
+
 }

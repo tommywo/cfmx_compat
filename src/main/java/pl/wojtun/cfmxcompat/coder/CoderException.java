@@ -15,4 +15,7 @@ public final class CoderException extends IOException {
     super(message);
   }
 
+  public CoderException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }
