@@ -19,10 +19,10 @@ class Transformer {
   private int m_Rot1_B = 0xc0000000;
   private int m_Rot1_C = 0xf0000000;
 
-  protected byte[] transformString(String key, byte inBytes[]) {
+  protected byte[] transformString(String key, byte[] inBytes) {
     setKey(key);
     int length = inBytes.length;
-    byte outBytes[] = new byte[length];
+    byte[] outBytes = new byte[length];
     for(int i = 0; i < length; i++) {
       outBytes[i] = transformByte(inBytes[i]);
     }
@@ -58,15 +58,17 @@ class Transformer {
       }
       crypto = (byte)(crypto << 1 | b ^ c);
     }
-    target ^= crypto;
-    return target;
+    byte out = target;
+    out ^= crypto;
+    return out;
   }
 
   private void setKey(String key) {
-    int i = 0;
+    int i;
     m_Key = key;
-    if(isEmpty(key)) key = "Default Seed";
-    char Seed[] = new char[key.length() >= 12 ? key.length() : 12];
+    String localKey = key;
+    if(isEmpty(localKey)) localKey = "Default Seed";
+    char[] Seed = new char[localKey.length() >= 12 ? localKey.length() : 12];
     m_Key.getChars(0, m_Key.length(), Seed, 0);
     int originalLength = m_Key.length();
     for(i = 0; originalLength + i < 12; i++)
@@ -83,7 +85,7 @@ class Transformer {
   }
 
 
-  private boolean isEmpty(String text){
+  private static boolean isEmpty(String text){
     return text == null || text.length()==0;
   }
 }

@@ -8,6 +8,8 @@ import org.apache.commons.codec.binary.Base64;
  */
 public final class Base64Coder {
 
+  private Base64Coder() {
+  }
 
   /**
    * encodes a byte array to Base64 String
@@ -40,7 +42,8 @@ public final class Base64Coder {
       return Base64.decodeBase64(bytes);
     }
     catch(Exception e) {
-      throw new CoderException("can't decode input ["+encoded+"]");
+      throw new CoderException("can't decode input ["+encoded+"]",e);
     }
   }
+
 }

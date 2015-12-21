@@ -8,17 +8,20 @@ import java.text.StringCharacterIterator;
  */
 public final class UUCoder {
 
+  private UUCoder() {
+  }
+
   /**
    * encodes a byte array to a String
    * @param barr
    * @return encoded String
    */
-  public static String encode(byte barr[]) {
-    StringBuffer rtn = new StringBuffer();
+  public static String encode(byte[] barr) {
+    StringBuilder rtn = new StringBuilder();
     int len = barr.length;
     int read = 0;
     boolean stop = false;
-    byte b = 0;
+    byte b;
     int offset = 0;
 
     do {
@@ -31,7 +34,7 @@ public final class UUCoder {
       rtn.append(_enc(b));
       for(int i = 0; i < b; i += 3) {
         if(len - offset < 3) {
-          byte padding[] = new byte[3];
+          byte[] padding = new byte[3];
           for(int z = 0; offset + z < len; z++) padding[z] = barr[offset + z];
           encodeBytes(padding, 0, rtn);
         } else {
@@ -54,11 +57,10 @@ public final class UUCoder {
    * @return decoded byte array
    */
   public static byte[] decode(String str) throws CoderException {
-    byte out[] = new byte[str.length()];
+    byte[] out = new byte[str.length()];
     int len = 0;
     int offset = 0;
-    //int current = 0;
-    byte b = 0;
+    byte b;
     boolean stop = false;
     StringCharacterIterator it = new StringCharacterIterator(str);
     do {
@@ -74,21 +76,21 @@ public final class UUCoder {
       it.next();
     }
     while(!stop);
-    byte rtn[] = new byte[len];
+    byte[] rtn = new byte[len];
     for(int i = 0; i < len; i++)
       rtn[i] = out[i];
 
     return rtn;
   }
 
-  private static void encodeBytes(byte in[], int off, StringBuffer out) {
+  private static void encodeBytes(byte[] in, int off, StringBuilder out) {
     out.append(_enc((byte)(in[off] >>> 2)));
     out.append(_enc((byte)(in[off] << 4 & 0x30 | in[off + 1] >>> 4 & 0xf)));
     out.append(_enc((byte)(in[off + 1] << 2 & 0x3c | in[off + 2] >>> 6 & 3)));
     out.append(_enc((byte)(in[off + 2] & 0x3f)));
   }
 
-  private static void decodeChars(StringCharacterIterator it, byte out[], int off) {
+  private static void decodeChars(StringCharacterIterator it, byte[] out, int off) {
     byte b1 = _dec(it.current());
     byte b2 = _dec(it.next());
     byte b3 = _dec(it.next());
@@ -109,4 +111,5 @@ public final class UUCoder {
   private static byte _dec(char c) {
     return (byte)(c - 32 & 0x3f);
   }
+
 }
